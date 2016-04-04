@@ -144,11 +144,13 @@ int selinux_enforcing;
 
 static int __init enforcing_setup(char *str)
 {
+#if defined(CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE)
+	selinux_enforcing = 1;
+#elif defined(CONFIG_SECURITY_SELINUX_NEVER_ENFORCE)
+	selinux_enforcing = 0;
+#else
 	unsigned long enforcing;
 	if (!strict_strtoul(str, 0, &enforcing))
-#ifdef CONFIG_ALWAYS_ENFORCE
-		selinux_enforcing = 1;
-#else
 		selinux_enforcing = enforcing ? 1 : 0;
 #endif
 	return 1;
@@ -161,11 +163,11 @@ int selinux_enabled = CONFIG_SECURITY_SELINUX_BOOTPARAM_VALUE;
 
 static int __init selinux_enabled_setup(char *str)
 {
+#ifdef CONFIG_SECURITY_SELINUX_ALWAYS_ENFORCE
+	selinux_enabled = 1;
+#else
 	unsigned long enabled;
 	if (!strict_strtoul(str, 0, &enabled))
-#ifdef CONFIG_ALWAYS_ENFORCE
-		selinux_enabled = 1;
-#else
 		selinux_enabled = enabled ? 1 : 0;
 #endif
 	return 1;
@@ -5126,11 +5128,7 @@ static int selinux_nlmsg_perm(struct sock *sk, struct sk_buff *skb)
 				  "SELinux:  unrecognized netlink message"
 				  " type=%hu for sclass=%hu\n",
 				  nlh->nlmsg_type, sksec->sclass);
-#ifdef CONFIG_ALWAYS_ENFORCE
-			if (security_get_allow_unknown())
-#else
 			if (!selinux_enforcing || security_get_allow_unknown())
-#endif
 				err = 0;
 		}
 
@@ -6539,9 +6537,7 @@ static __init int selinux_init(void)
 
 	if (register_security(&selinux_ops))
 		panic("SELinux: Unable to register with kernel.\n");
-#ifdef CONFIG_ALWAYS_ENFORCE
-	selinux_enforcing = 1;
-#endif
+
 	if (selinux_enforcing)
 		printk(KERN_DEBUG "SELinux:  Starting in enforcing mode\n");
 	else
@@ -6618,9 +6614,7 @@ static struct nf_hook_ops selinux_ipv6_ops[] = {
 static int __init selinux_nf_ip_init(void)
 {
 	int err = 0;
-#ifdef CONFIG_ALWAYS_ENFORCE
-	selinux_enabled = 1;
-#endif
+
 	if (!selinux_enabled)
 		goto out;
 
