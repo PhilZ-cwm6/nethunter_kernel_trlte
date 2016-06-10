@@ -581,46 +581,16 @@ int main(int ac, char **av)
 				"***\n"), defconfig_file);
 			exit(1);
 		}
-                name = getenv("KCONFIG_SELINUX");
-                printf("KCONFIG_SELINUX(%s)\n", name);
-                if (name) {
-                        if (conf_read_simple(name, S_DEF_USER, false)) {
-                                printf(_("***\n"
-                                        "*** Can't find selinux configuration \"%s\"!\n"
-                                        "***\n"), name);
-                                exit(1);
-                        }
-                }
-                name = getenv("KCONFIG_LOG_SELINUX");
-                printf("KCONFIG_LOG_SELINUX(%s)\n", name);
-                if (name) {
-                        if (conf_read_simple(name, S_DEF_USER, false)) {
-                                printf(_("***\n"
-                                        "*** Can't find selinux log configuration \"%s\"!\n"
-                                        "***\n"), name);
-                                exit(1);
-                        }
-                }
-                name = getenv("KCONFIG_TIMA");
-                printf("KCONFIG_TIMA(%s)\n", name);
-                if (name) {
-                        if (conf_read_simple(name, S_DEF_USER, false)) {
-                                printf(_("***\n"
-                                        "*** Can't find tima log configuration \"%s\"!\n"
-                                        "***\n"), name);
-                                exit(1);
-                        }
-                }
-                name = getenv("KCONFIG_DMVERITY");
-                printf("KCONFIG_DMVERITY(%s)\n", name);
-                if (name) {
-                        if (conf_read_simple(name, S_DEF_USER, false)) {
-                                printf(_("***\n"
-                                        "*** Can't find dmverity configuration \"%s\"!\n"
-                                        "***\n"), name);
-                                exit(1);
-                        }
-                }
+		name = getenv("KCONFIG_DEVICE");
+		printf("KCONFIG_DEVICE(%s)\n", name);
+		if (name) {
+			if (conf_read_simple(name, S_DEF_USER, false)) {
+				printf(_("***\n"
+					"*** Can't find device configuration \"%s\"!\n"
+					"***\n"), name);
+				exit(1);
+			}
+		}
 		name = getenv("KCONFIG_VARIANT");
 		printf("KCONFIG_VARIANT(%s)\n", name);
 		if (name) {
@@ -630,18 +600,13 @@ int main(int ac, char **av)
 					"***\n"), name);
 				exit(1);
 			}
-		} else {
-			printf(_("***\n"
-				"***  You must specify VARIANT_DEFCONFIG !\n"
-				"***\n"));
-		exit(1);
 		}
-		name = getenv("KCONFIG_DEBUG");
-		printf("KCONFIG_DEBUG(%s)\n", name);
+		name = getenv("KCONFIG_EXTRA");
+		printf("KCONFIG_EXTRA(%s)\n", name);
 		if (name) {
 			if (conf_read_simple(name, S_DEF_USER, false)) {
 				printf(_("***\n"
-					"*** Can't find debug configuration \"%s\"!\n"
+					"*** Can't find extra configuration \"%s\"!\n"
 					"***\n"), name);
 				exit(1);
 			}
