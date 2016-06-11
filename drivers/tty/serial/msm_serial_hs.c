@@ -75,9 +75,7 @@ static void *ipc_msm_hs_log_ctxt;
 #define IPC_MSM_HS_LOG_PAGES 30
 
 
-#define _DW_ENABLED
-
-#ifdef _DW_ENABLED
+#ifdef CONFIG_DUALWAVE
 #define MAX_DUALWAVE_MESSAGE_SIZE 128
 
 #include <linux/syscalls.h>
@@ -1624,7 +1622,7 @@ static void msm_serial_hs_rx_tlet(unsigned long tlet_ptr)
 			msm_uport->rx.buffer_pending |= CHARS_NORMAL |
 				retval << 5 | (rx_count - retval) << 16;
 		}
-	#ifdef _DW_ENABLED
+	#ifdef CONFIG_DUALWAVE
 		else
 		{
 			if (checkDualWaveStatus() != DUALWAVE_INACTIVE) {
