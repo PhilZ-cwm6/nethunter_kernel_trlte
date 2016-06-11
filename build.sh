@@ -1,5 +1,5 @@
 #!/bin/bash
-# Stock kernel for Samsung Galaxy Note 4 (Qualcomm) build script by jcadduono
+# TWRP kernel for Samsung Galaxy Note 4 (Qualcomm) build script by jcadduono
 
 ################### BEFORE STARTING ################
 #
@@ -30,7 +30,7 @@ export ARCH=arm
 export CROSS_COMPILE=$TOOLCHAIN/bin/arm-linux-gnueabihf-
 
 [ "$DEVICE" ] || DEVICE=trlte
-[ "$TARGET" ] || TARGET=stock
+[ "$TARGET" ] || TARGET=twrp
 [ "$1" ] && VARIANT=$1
 [ "$VARIANT" ] || VARIANT=eur
 

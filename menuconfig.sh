@@ -10,7 +10,7 @@ TOOLCHAIN=$HOME/build/toolchain/gcc-linaro-4.9-2016.02-x86_64_arm-linux-gnueabih
 export ARCH=arm
 export CROSS_COMPILE=$TOOLCHAIN/bin/arm-linux-gnueabihf-
 
-[ "$TARGET" ] || TARGET=stock
+[ "$TARGET" ] || TARGET=twrp
 DEFCONFIG="${TARGET}_defconfig"
 DEFCONFIG_FILE=$RDIR/arch/$ARCH/configs/$DEFCONFIG
 
